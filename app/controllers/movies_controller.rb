@@ -12,6 +12,17 @@ class MoviesController < ApplicationController
 
   def index
     @movies = Movie.all
+    @all_ratings = Movie.get_ratings
+    
+    # if clicked, sorts by title or release date
+    if(params[:sort_by])
+      @movies = Movie.order('title ASC')
+    elsif(params[:sort_by_rdate])
+      @movies = Movie.order('release_date ASC')
+    # else, refreshes the page
+    else
+      @movies = Movie.all
+    end
   end
 
   def new
